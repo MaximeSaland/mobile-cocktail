@@ -1,51 +1,37 @@
 package com.enseirb.cocktail.ui
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.viewpager2.widget.ViewPager2
+import com.enseirb.cocktail.R
 import com.enseirb.cocktail.databinding.ActivityMainBinding
-import com.enseirb.cocktail.ui.categories.CategoriesFragment
-import com.enseirb.cocktail.ui.search.SearchFragment
+import com.enseirb.cocktail.ui.adapter.FragmentAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private  lateinit var tabLayout: TabLayout
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager2: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        tabLayout = binding.tabLayout
         val view = binding.root
         setContentView(view)
-        displayFirstFragment()
-        tabLayout.addOnTabSelectedListener(this)
-    }
 
-    private fun displayFirstFragment() {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.fragmentContainerView.id, SearchFragment.newInstance())
-            .commit()
-    }
+        tabLayout = binding.tabLayout
+        viewPager2 = binding.viewPager2
 
-    private fun displaySecondFragment() {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.fragmentContainerView.id, CategoriesFragment.newInstance())
-            .commit()
-    }
+        //tabLayout.addOnTabSelectedListener(this)
+        val adapter = FragmentAdapter(supportFragmentManager, lifecycle)
+        viewPager2.adapter = adapter
 
-    override fun onTabSelected(tab: TabLayout.Tab?) {
-        tab?.let {
-            when(it.position) {
-                0 -> displayFirstFragment()
-                1 -> displaySecondFragment()
-            }
-        }
-    }
-
-    override fun onTabUnselected(tab: TabLayout.Tab?) {
-    }
-
-    override fun onTabReselected(tab: TabLayout.Tab?) {
+        val tabs = arrayOf("Rechercher", "Catégories", "Ingrédients")
+        val tabsIcons = arrayOf(R.drawable.ic_cocktail, R.drawable.ic_category, R.drawable.ic_ingredient)
+        TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
+            tab.text = tabs[position]
+            tab.setIcon(tabsIcons[position])
+        }.attach()
     }
 }
