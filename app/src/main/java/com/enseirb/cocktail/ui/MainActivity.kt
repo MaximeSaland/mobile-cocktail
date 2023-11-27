@@ -3,12 +3,17 @@ package com.enseirb.cocktail.ui
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
 import com.enseirb.cocktail.R
+import com.enseirb.cocktail.core.service.ApiClient
+import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.ActivityMainBinding
 import com.enseirb.cocktail.ui.adapter.FragmentAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -33,5 +38,37 @@ class MainActivity : AppCompatActivity() {
             tab.text = tabs[position]
             tab.setIcon(tabsIcons[position])
         }.attach()
+
+        val repo = CocktailRepository(ApiClient.service)
+
+        repo.getAllCategories {c ->
+            c.forEach {
+                Log.i("CATEG", it.toString())
+            }
+        }
+
+        repo.getAllIngredients { i ->
+            i.forEach {
+                Log.i("ING", it.toString())
+            }
+        }
+
+        repo.getCocktailsByName("margarita") { c ->
+            c.forEach {
+                Log.i("COCK-NAME", it.toString())
+            }
+        }
+
+        repo.getCocktailsByCategory("Ordinary_Drink") { c ->
+            c.forEach {
+                Log.i("COCK-CATEG", it.toString())
+            }
+        }
+
+        repo.getCocktailsByIngredient("vodka") {
+            it.forEach {
+                Log.i("COCK-ING", it.toString())
+            }
+        }
     }
 }
