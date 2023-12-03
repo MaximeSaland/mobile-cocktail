@@ -1,6 +1,5 @@
 package com.enseirb.cocktail.ui
 
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +11,6 @@ import com.enseirb.cocktail.databinding.ActivityMainBinding
 import com.enseirb.cocktail.ui.adapter.FragmentAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

@@ -1,6 +1,6 @@
 package com.enseirb.cocktail.core.model
 
-data class IngredientOld(
+data class Ingredient(
     val name: String,
-    val measure: String
+    val measure: String?
 )

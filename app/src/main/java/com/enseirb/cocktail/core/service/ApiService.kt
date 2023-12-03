@@ -1,5 +1,8 @@
 package com.enseirb.cocktail.core.service
 
+import com.enseirb.cocktail.core.model.ApiResponse
+import com.enseirb.cocktail.core.model.Cocktail
+import com.enseirb.cocktail.core.model.StringResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
