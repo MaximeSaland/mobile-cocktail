@@ -6,5 +6,6 @@ data class Cocktail(
     val category: String?,
     val alcoholic: String?,
     val ingredients: List<Ingredient>?,
-    val recipe: String?
+    val recipe: String?,
+    val thumb: String?
 )
