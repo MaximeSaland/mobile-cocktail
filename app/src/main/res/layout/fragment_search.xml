@@ -19,13 +19,44 @@
             android:layout_height="wrap_content"
             app:queryHint="@string/Rechercher"
             android:background="@drawable/search_view_bg"
-            android:layout_margin="18dp"
-            />
+            android:layout_margin="18dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_fragment_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:visibility="gone" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:trackColor="@color/purple"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_no_cocktail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+
+                android:src="@drawable/no_alcohol"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NO COCKTAIL FOUND"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="@color/red"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
