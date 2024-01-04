@@ -37,15 +37,18 @@ class SearchFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchFragmentRecyclerView.visibility = View.GONE
+                binding.linearLayoutNoCocktail.visibility = View.GONE
+                binding.progressCircular.visibility = View.VISIBLE
                 if (query != null) {
-                    repo.getCocktailsByName(query) { cocktails: List<Cocktail?> ->
-                        // FIXME Exception raised
-                        // Can not evaluate the expression: Kotlin resolution encountered a problem while analyzing KtBlockCodeFragment
-                        if (cocktails.isNullOrEmpty()) {
-                            Log.i("EMPTY", "empty")
+                    repo.getCocktailsByName(query) { cocktails: List<Cocktail?>? ->
+                        if (!cocktails.isNullOrEmpty()) {
+                            adapter.updateData(cocktails)
+                            binding.searchFragmentRecyclerView.visibility = View.VISIBLE
                         } else {
-                            Log.i("NOTEMPTY", "not empty")
+                            binding.linearLayoutNoCocktail.visibility = View.VISIBLE
                         }
+                        binding.progressCircular.visibility = View.GONE
                     }
                 }
                 return true
