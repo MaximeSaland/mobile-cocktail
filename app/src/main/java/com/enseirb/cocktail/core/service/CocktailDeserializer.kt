@@ -19,6 +19,7 @@ class CocktailDeserializer : JsonDeserializer<Cocktail> {
         val category = jsonObject?.get("strCategory")?.asString
         val alcoholic = jsonObject?.get("strAlcoholic")?.asString
         val recipe = jsonObject?.get("strInstructions")?.asString
+        val thumb = jsonObject?.get("strDrinkThumb")?.asString
         val ingredients = mutableListOf<Ingredient>()
 
         if (jsonObject?.get("strIngredient1") != null) {
@@ -33,6 +34,6 @@ class CocktailDeserializer : JsonDeserializer<Cocktail> {
             }
         }
 
-        return Cocktail(id, name, category, alcoholic, ingredients, recipe)
+        return Cocktail(id, name, category, alcoholic, ingredients, recipe, thumb)
     }
 }

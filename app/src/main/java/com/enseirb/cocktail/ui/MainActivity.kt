@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         tabLayout = binding.tabLayout
         viewPager2 = binding.viewPager2
 
-        //tabLayout.addOnTabSelectedListener(this)
         val adapter = FragmentAdapter(supportFragmentManager, lifecycle)
         viewPager2.adapter = adapter
 
@@ -38,34 +37,6 @@ class MainActivity : AppCompatActivity() {
 
         val repo = CocktailRepository(ApiClient.service)
 
-        repo.getAllCategories {c ->
-            c.forEach {
-                Log.i("CATEG", it.toString())
-            }
-        }
 
-        repo.getAllIngredients { i ->
-            i.forEach {
-                Log.i("ING", it.toString())
-            }
-        }
-
-        repo.getCocktailsByName("margarita") { c ->
-            c.forEach {
-                Log.i("COCK-NAME", it.toString())
-            }
-        }
-
-        repo.getCocktailsByCategory("Ordinary_Drink") { c ->
-            c.forEach {
-                Log.i("COCK-CATEG", it.toString())
-            }
-        }
-
-        repo.getCocktailsByIngredient("vodka") {
-            it.forEach {
-                Log.i("COCK-ING", it.toString())
-            }
-        }
     }
 }
