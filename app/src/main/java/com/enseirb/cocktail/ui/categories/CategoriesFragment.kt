@@ -15,9 +15,10 @@ import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.FragmentCategoriesBinding
 import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.adapter.TextAdapter
+import com.enseirb.cocktail.ui.backButton.IOnBackPressed
 
 
-class CategoriesFragment : Fragment() {
+class CategoriesFragment : Fragment(), IOnBackPressed{
     private lateinit var binding: FragmentCategoriesBinding
     private lateinit var repo: CocktailRepository
     private lateinit var recyclerView: RecyclerView
@@ -74,6 +75,14 @@ class CategoriesFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onBackPressed(): Boolean {
+        if (selectedCategory == "")
+            return false
+        selectedCategory = ""
+        recyclerView.adapter = categoriesAdapter
+        return true
     }
     companion object {
         @JvmStatic

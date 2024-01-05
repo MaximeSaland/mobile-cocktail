@@ -2,13 +2,13 @@ package com.enseirb.cocktail.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
 import com.enseirb.cocktail.R
 import com.enseirb.cocktail.core.service.ApiClient
 import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.ActivityMainBinding
 import com.enseirb.cocktail.ui.adapter.FragmentAdapter
+import com.enseirb.cocktail.ui.backButton.IOnBackPressed
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -36,7 +36,15 @@ class MainActivity : AppCompatActivity() {
         }.attach()
 
         val repo = CocktailRepository(ApiClient.service)
+    }
 
-
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val currentFragId = viewPager2.currentItem
+        val currentFrag = supportFragmentManager.findFragmentByTag("f$currentFragId") as? IOnBackPressed
+        if (currentFrag != null) {
+            if (! currentFrag.onBackPressed())
+                super.onBackPressed()
+        }
     }
 }

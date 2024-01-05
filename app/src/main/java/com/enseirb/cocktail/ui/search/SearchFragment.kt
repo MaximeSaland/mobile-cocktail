@@ -1,7 +1,6 @@
 package com.enseirb.cocktail.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,9 @@ import com.enseirb.cocktail.core.service.ApiClient
 import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.FragmentSearchBinding
 import com.enseirb.cocktail.ui.adapter.CocktailAdapter
+import com.enseirb.cocktail.ui.backButton.IOnBackPressed
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), IOnBackPressed {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var repo: CocktailRepository
     private lateinit var recyclerView: RecyclerView
@@ -24,7 +24,7 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         repo = CocktailRepository(ApiClient.service)
 
@@ -61,7 +61,9 @@ class SearchFragment : Fragment() {
 
         return binding.root
     }
-
+    override fun onBackPressed(): Boolean {
+        return false
+    }
     companion object {
         @JvmStatic
         fun newInstance() = SearchFragment()

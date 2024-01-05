@@ -15,8 +15,9 @@ import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.FragmentIngredientsBinding
 import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.adapter.TextAdapter
+import com.enseirb.cocktail.ui.backButton.IOnBackPressed
 
-class IngredientsFragment : Fragment() {
+class IngredientsFragment : Fragment(), IOnBackPressed {
     private lateinit var binding: FragmentIngredientsBinding
     private lateinit var repo: CocktailRepository
     private lateinit var recyclerView: RecyclerView
@@ -72,6 +73,15 @@ class IngredientsFragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onBackPressed(): Boolean {
+        if (selectedIngredient == "")
+            return false
+        selectedIngredient = ""
+        recyclerView.adapter = ingredientsAdapter
+        return true
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = IngredientsFragment()
