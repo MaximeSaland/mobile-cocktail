@@ -34,7 +34,7 @@ class CocktailRepository(private val apiService: ApiService) {
     }
 
     fun getAllIngredients(callback: (List<StringResponse?>) -> Unit) {
-        val ingredients: Call<ApiResponse<StringResponse>> = apiService.getAllIngredidients()
+        val ingredients: Call<ApiResponse<StringResponse>> = apiService.getAllIngredients()
         enqueue(ingredients, callback)
     }
 

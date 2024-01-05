@@ -14,8 +14,8 @@ interface ApiService {
     fun getCocktailsDetailsByIngredientName(@Query("i") name: String): Call<ApiResponse<Cocktail?>>
     @GET("list.php?c=list")
     fun getAllCategories(): Call<ApiResponse<StringResponse>>
-    @GET("list.php?c=list")
-    fun getAllIngredidients(): Call<ApiResponse<StringResponse>>
+    @GET("list.php?i=list")
+    fun getAllIngredients(): Call<ApiResponse<StringResponse>>
     @GET("list.php?a=list")
     fun getAllAlcoholic(): Call<ApiResponse<String>>
     @GET("filter.php")

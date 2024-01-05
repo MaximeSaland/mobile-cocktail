@@ -29,7 +29,7 @@ class CategoriesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         repo = CocktailRepository(ApiClient.service)
 
@@ -71,10 +71,7 @@ class CategoriesFragment : Fragment() {
 
             recyclerView.adapter = cocktailAdapter
             // Notify the RecyclerView that the data set has changed
-            recyclerView.adapter?.notifyDataSetChanged()
         }
-
-
 
         return binding.root
     }
