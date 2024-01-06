@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="18dp"
     android:layout_marginStart="18dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_marginBottom="10dp"
     >
@@ -61,12 +60,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:orientation="horizontal"
-            android:gravity="right"
+            android:gravity="end"
             >
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Plus"
+                android:id="@+id/button"
                 />
         </LinearLayout>
 

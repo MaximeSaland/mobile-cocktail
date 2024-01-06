@@ -1,6 +1,8 @@
 package com.enseirb.cocktail.ui.search
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.FragmentSearchBinding
 import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.backButton.IOnBackPressed
+import com.enseirb.cocktail.ui.recipe.RecipeDetail
 
 class SearchFragment : Fragment(), IOnBackPressed {
     private lateinit var binding: FragmentSearchBinding
@@ -59,6 +62,15 @@ class SearchFragment : Fragment(), IOnBackPressed {
             }
         })
 
+        adapter.onButtonClicked = {
+            if (it == null)
+                Log.i("COCKTAIL SELECT", "Cocktail selected was null")
+            else {
+                val intent = Intent(activity, RecipeDetail::class.java)
+                intent.putExtra("cocktailName", it)
+                startActivity(intent)
+            }
+        }
         return binding.root
     }
     override fun onBackPressed(): Boolean {

@@ -1,5 +1,6 @@
 package com.enseirb.cocktail.ui.ingredients
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import com.enseirb.cocktail.databinding.FragmentIngredientsBinding
 import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.adapter.TextAdapter
 import com.enseirb.cocktail.ui.backButton.IOnBackPressed
+import com.enseirb.cocktail.ui.recipe.RecipeDetail
 
 class IngredientsFragment : Fragment(), IOnBackPressed {
     private lateinit var binding: FragmentIngredientsBinding
@@ -23,7 +25,6 @@ class IngredientsFragment : Fragment(), IOnBackPressed {
     private lateinit var recyclerView: RecyclerView
     private lateinit var ingredientsAdapter: TextAdapter
     private lateinit var cocktailAdapter: CocktailAdapter
-
     private lateinit var selectedIngredient : String
 
     override fun onCreateView(
@@ -37,12 +38,15 @@ class IngredientsFragment : Fragment(), IOnBackPressed {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         ingredientsAdapter = TextAdapter(emptyList())
         recyclerView.adapter = ingredientsAdapter
+
+        binding.progressCircular.visibility = View.VISIBLE
         repo.getAllIngredients { ing: List<StringResponse?> ->
             if (ing.isEmpty()) {
                 Log.i("INGREDIENTS", "empty")
             } else {
                 Log.i("INGREDIENTS", "not_empty")
                 ingredientsAdapter.updateData(ing)
+                binding.progressCircular.visibility = View.GONE
             }
         }
         selectedIngredient = ""
@@ -53,22 +57,32 @@ class IngredientsFragment : Fragment(), IOnBackPressed {
             selectedIngredient = it ?: ""
             Log.i("INGREDIENTS", "name of the category was $it")
 
+            binding.progressCircular.visibility = View.VISIBLE
             repo.getCocktailsByIngredient(selectedIngredient) { cocktails: List<Cocktail?> ->
                 if (selectedIngredient.isEmpty()) {
-                    Log.i("INGREDIENTS", "name of the ingredient was empty")
-
+                    Log.e("INGREDIENTS", "name of the ingredient was empty")
                 }
                 if (cocktails.isEmpty()) {
-                    Log.i("COCKTAILS", "empty")
+                    Log.i("INGREDIENTS", "no cocktail found")
                 } else {
-                    Log.i("COCKTAILS", "not_empty")
+                    Log.i("INGREDIENTS", "not_empty")
                     cocktailAdapter.updateData(cocktails)
                 }
-
+                binding.progressCircular.visibility = View.GONE
             }
 
             recyclerView.adapter = cocktailAdapter
             // Notify the RecyclerView that the data set has changed
+        }
+
+        cocktailAdapter.onButtonClicked = {
+            if (it == null)
+                Log.i("COCKTAIL SELECT", "Cocktail selected was null")
+            else {
+                val intent = Intent(activity, RecipeDetail::class.java)
+                intent.putExtra("cocktailName", it)
+                startActivity(intent)
+            }
         }
 
         return binding.root

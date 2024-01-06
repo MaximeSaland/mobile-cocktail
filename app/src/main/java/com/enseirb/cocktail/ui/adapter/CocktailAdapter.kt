@@ -8,14 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enseirb.cocktail.R
 import com.enseirb.cocktail.core.model.Cocktail
 import com.enseirb.cocktail.databinding.CocktailCardBinding
+import com.google.android.material.button.MaterialButton
 import com.squareup.picasso.Picasso
 
 class CocktailAdapter(private var cocktailList: List<Cocktail?>) : RecyclerView.Adapter<CocktailAdapter.ViewHolder>() {
+
+    var onButtonClicked: ( (String?) -> Unit)? = null
+
     class ViewHolder(binding: CocktailCardBinding) : RecyclerView.ViewHolder(binding.root) {
         val title: TextView = binding.cocktailCardTextViewTitle
         val thumb: ImageView = binding.cocktailCardImageView
         val category: TextView = binding.cocktailCardTextViewSecondaryText
         val recipe: TextView = binding.cocktailCardTextViewSupportingText
+        val button: MaterialButton = binding.button
     }
 
     fun updateData(newData: List<Cocktail?>) {
@@ -37,6 +42,7 @@ class CocktailAdapter(private var cocktailList: List<Cocktail?>) : RecyclerView.
             .load(cocktail?.thumb)
             .placeholder(R.drawable.ic_cocktail)
             .into(holder.thumb)
+        holder.button.setOnClickListener{ onButtonClicked?.invoke(cocktail?.name) }
     }
 
     override fun getItemCount(): Int {

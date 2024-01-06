@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.enseirb.cocktail.R
-import com.enseirb.cocktail.core.service.ApiClient
-import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.ActivityMainBinding
 import com.enseirb.cocktail.ui.adapter.FragmentAdapter
 import com.enseirb.cocktail.ui.backButton.IOnBackPressed
@@ -24,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout = binding.tabLayout
         viewPager2 = binding.viewPager2
-
         val adapter = FragmentAdapter(supportFragmentManager, lifecycle)
         viewPager2.adapter = adapter
 
@@ -35,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             tab.setIcon(tabsIcons[position])
         }.attach()
 
-        val repo = CocktailRepository(ApiClient.service)
     }
 
     @Deprecated("Deprecated in Java")
@@ -47,4 +43,5 @@ class MainActivity : AppCompatActivity() {
                 super.onBackPressed()
         }
     }
+
 }
