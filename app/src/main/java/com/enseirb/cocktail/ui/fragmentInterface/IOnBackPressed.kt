@@ -1,4 +1,4 @@
-package com.enseirb.cocktail.ui.backButton
+package com.enseirb.cocktail.ui.fragmentInterface
 
 interface IOnBackPressed {
     fun onBackPressed(): Boolean

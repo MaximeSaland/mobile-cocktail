@@ -16,7 +16,7 @@ import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.FragmentCategoriesBinding
 import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.adapter.TextAdapter
-import com.enseirb.cocktail.ui.backButton.IOnBackPressed
+import com.enseirb.cocktail.ui.fragmentInterface.IOnBackPressed
 import com.enseirb.cocktail.ui.recipe.RecipeDetail
 
 
@@ -28,7 +28,6 @@ class CategoriesFragment : Fragment(), IOnBackPressed{
     private lateinit var cocktailAdapter: CocktailAdapter
 
     private lateinit var selectedCategory : String
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -99,10 +98,13 @@ class CategoriesFragment : Fragment(), IOnBackPressed{
         recyclerView.adapter = categoriesAdapter
         return true
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = CategoriesFragment()
     }
+
+
 
 
 }

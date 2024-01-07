@@ -11,7 +11,7 @@ import com.enseirb.cocktail.core.service.ApiClient
 import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.ActivityMainBinding
 import com.enseirb.cocktail.ui.adapter.FragmentAdapter
-import com.enseirb.cocktail.ui.backButton.IOnBackPressed
+import com.enseirb.cocktail.ui.fragmentInterface.IOnBackPressed
 import com.enseirb.cocktail.ui.recipe.RecipeDetail
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager2: ViewPager2
     private lateinit var randomButton: MaterialButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         tabLayout = binding.tabLayout
         viewPager2 = binding.viewPager2
         randomButton = binding.randomButton
+
 
         val adapter = FragmentAdapter(supportFragmentManager, lifecycle)
         viewPager2.adapter = adapter
@@ -63,8 +65,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
     }
+
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {

@@ -11,15 +11,46 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <androidx.appcompat.widget.SearchView
-            app:queryBackground="@android:color/transparent"
-            app:iconifiedByDefault="false"
-            android:id="@+id/search_view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:queryHint="@string/Rechercher"
-            android:background="@drawable/search_view_bg"
-            android:layout_margin="18dp" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.SearchView
+                app:queryBackground="@android:color/transparent"
+                app:iconifiedByDefault="false"
+                android:id="@+id/search_view"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:queryHint="@string/Rechercher"
+                android:background="@drawable/search_view_bg"
+                android:layout_margin="18dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:gravity="center"
+                >
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/alcohol_switch"
+                    >
+                </com.google.android.material.materialswitch.MaterialSwitch>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:src="@drawable/no_alcohol"
+                    app:tint="#a7a6a2"
+                    android:id="@+id/alcohol">
+                </ImageView>
+
+            </LinearLayout>
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_fragment_recycler_view"

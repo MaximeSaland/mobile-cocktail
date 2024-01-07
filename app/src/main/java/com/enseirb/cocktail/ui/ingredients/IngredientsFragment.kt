@@ -16,10 +16,10 @@ import com.enseirb.cocktail.core.service.CocktailRepository
 import com.enseirb.cocktail.databinding.FragmentIngredientsBinding
 import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.adapter.TextAdapter
-import com.enseirb.cocktail.ui.backButton.IOnBackPressed
+import com.enseirb.cocktail.ui.fragmentInterface.IOnBackPressed
 import com.enseirb.cocktail.ui.recipe.RecipeDetail
 
-class IngredientsFragment : Fragment(), IOnBackPressed {
+class IngredientsFragment : Fragment(), IOnBackPressed{
     private lateinit var binding: FragmentIngredientsBinding
     private lateinit var repo: CocktailRepository
     private lateinit var recyclerView: RecyclerView
@@ -100,4 +100,5 @@ class IngredientsFragment : Fragment(), IOnBackPressed {
         @JvmStatic
         fun newInstance() = IngredientsFragment()
     }
+
 }

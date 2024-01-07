@@ -76,6 +76,9 @@ class RecipeDetail : AppCompatActivity() {
                         .into(image)
                     if (cocktail.alcoholic == "Alcoholic")
                         alcohol.visibility = View.GONE
+                    else
+                        alcohol.visibility = View.VISIBLE
+
                     category.text = cocktail.category
                     instruction.text = cocktail.recipe
                     ingredients.text = ingredientListToString(cocktail.ingredients)
