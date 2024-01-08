@@ -20,14 +20,14 @@
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Feeling lucky?"
+                android:layout_gravity="center"
+                android:text="@string/feeling_lucky"
                 android:id="@+id/random_button"
-                >
-            </com.google.android.material.button.MaterialButton>
+                />
 
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="0dp"

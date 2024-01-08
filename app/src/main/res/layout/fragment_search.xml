@@ -22,7 +22,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                app:queryHint="@string/Rechercher"
+                app:queryHint="@string/Search"
                 android:background="@drawable/search_view_bg"
                 android:layout_margin="18dp" />
 
@@ -37,16 +37,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:id="@+id/alcohol_switch"
-                    >
-                </com.google.android.material.materialswitch.MaterialSwitch>
+                    />
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="30dp"
-                    android:src="@drawable/no_alcohol"
-                    app:tint="#a7a6a2"
-                    android:id="@+id/alcohol">
-                </ImageView>
+                    android:src="@drawable/soft_drink"
+                    app:tint="@color/gray"
+                    android:id="@+id/alcohol"
+                    android:contentDescription="@string/soft" />
 
             </LinearLayout>
         </LinearLayout>
@@ -73,17 +72,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:ignore="UseCompoundDrawables">
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-
-                android:src="@drawable/no_alcohol"/>
+                android:src="@drawable/no_alcohol"
+                android:contentDescription="@string/cocktail_not_found" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NO COCKTAIL FOUND"
+                android:text="@string/no_cocktail_found"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:textColor="@color/red"/>

@@ -14,6 +14,7 @@ import com.enseirb.cocktail.ui.adapter.FragmentAdapter
 import com.enseirb.cocktail.ui.fragmentInterface.IOnBackPressed
 import com.enseirb.cocktail.ui.recipe.RecipeDetail
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.random.Random
@@ -26,6 +27,31 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var randomButton: MaterialButton
 
+    private fun randomSearch() {
+        repo.getCocktailsByName("") {cocktails: List<Cocktail?>, error : String?->
+            if (error != null) {
+                Snackbar.make(binding.root, "Failed retrieving data, please turn on Wi-Fi.", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry") {
+                        randomSearch()
+                    }
+                    .show()
+            }
+            else {
+                if (cocktails.isEmpty())
+                    Log.e("MAIN_ACTIVITY", "No cocktail found")
+                else {
+                    val randomNumber = Random.nextInt(0, cocktails.size)
+                    val cocktailName = cocktails[randomNumber]?.name
+                    if (cocktailName != null) {
+                        val intent = Intent(this, RecipeDetail::class.java)
+                        intent.putExtra("cocktailName", cocktailName)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -40,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = FragmentAdapter(supportFragmentManager, lifecycle)
         viewPager2.adapter = adapter
 
-        val tabs = arrayOf("Rechercher", "Catégories", "Ingrédients")
+        val tabs = arrayOf("Search", "Categories", "Ingredients")
         val tabsIcons = arrayOf(R.drawable.ic_cocktail, R.drawable.ic_category, R.drawable.ic_ingredient)
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
             tab.text = tabs[position]
@@ -49,20 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         repo = CocktailRepository(ApiClient.service)
         randomButton.setOnClickListener {
-            repo.getCocktailsByName("") {cocktails: List<Cocktail?> ->
-                if (cocktails.isEmpty())
-                    Log.e("MAIN_ACTIVITY", "No cocktail found")
-                else {
-                    val randomNumber = Random.nextInt(0, cocktails.size)
-                    val cocktailName = cocktails[randomNumber]?.name
-                    Log.i("MAIN_ACTIVITY", "Random number was $randomNumber")
-                    if (cocktailName != null) {
-                        val intent = Intent(this, RecipeDetail::class.java)
-                        intent.putExtra("cocktailName", cocktailName)
-                        startActivity(intent)
-                    }
-                }
-            }
+            randomSearch()
         }
 
     }
