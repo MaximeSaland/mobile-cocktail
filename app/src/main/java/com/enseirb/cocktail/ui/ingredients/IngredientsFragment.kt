@@ -28,6 +28,7 @@ class IngredientsFragment : Fragment(), IOnBackPressed{
     private lateinit var cocktailAdapter: CocktailAdapter
     private lateinit var selectedIngredient : String
 
+    // API call for getting list of ingredients
     private fun getAllIngredients() {
         binding.progressCircular.visibility = View.VISIBLE
         repo.getAllIngredients { ing: List<StringResponse?>, error : String? ->
@@ -50,6 +51,7 @@ class IngredientsFragment : Fragment(), IOnBackPressed{
         }
     }
 
+    // API call for getting cocktail
     private fun getCocktail() {
         binding.progressCircular.visibility = View.VISIBLE
         binding.noAlcohol.visibility = View.GONE

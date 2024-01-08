@@ -30,6 +30,7 @@ class CategoriesFragment : Fragment(), IOnBackPressed{
 
     private lateinit var selectedCategory : String
 
+    // API call for getting all categories
     private fun getAllCategories() {
         binding.progressCircular.visibility = View.VISIBLE
         repo.getAllCategories { cat: List<StringResponse?>, error : String? ->
@@ -53,6 +54,7 @@ class CategoriesFragment : Fragment(), IOnBackPressed{
         }
     }
 
+    // API call for getting cocktail
     private fun getCocktail() {
         binding.progressCircular.visibility = View.VISIBLE
         binding.noAlcohol.visibility = View.GONE

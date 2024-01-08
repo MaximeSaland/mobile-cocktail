@@ -39,6 +39,7 @@ class RecipeDetail : AppCompatActivity() {
             "- ${ingredient.name} (${measure})\n"
     }
 
+    // Format ingredients data for displaying as one string
     private fun ingredientListToString(ingredients: List<Ingredient>?) : String {
         if (ingredients == null)
             return ""
@@ -48,6 +49,7 @@ class RecipeDetail : AppCompatActivity() {
         return res
     }
 
+    // API call for getting cocktail
     private fun getCocktail(cocktailName: String) {
         binding.progressCircular.visibility = View.VISIBLE
         repo.getCocktailsByName(cocktailName) {cocktails : List<Cocktail?>, error : String? ->
@@ -110,6 +112,7 @@ class RecipeDetail : AppCompatActivity() {
         val isCocktailFavorite = sharedPreference.getBoolean(cocktailName, false)
         favorite.isChecked = isCocktailFavorite
 
+        // Save or delete favorite ingredients
         favorite.setOnCheckedChangeListener { _, isChecked ->
             with (sharedPreference.edit()) {
                 if (isChecked) {

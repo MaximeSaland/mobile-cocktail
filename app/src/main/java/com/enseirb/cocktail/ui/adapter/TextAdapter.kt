@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enseirb.cocktail.core.model.StringResponse
 import com.enseirb.cocktail.databinding.CategoryCardBinding
 
+// Adapter used for categories and ingredients (text only)
 class TextAdapter(private var textList: List<StringResponse?>) : RecyclerView.Adapter<TextAdapter.ViewHolder>() {
 
     var onItemClick: ( (String?) -> Unit)? = null

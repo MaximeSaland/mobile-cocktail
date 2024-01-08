@@ -31,6 +31,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
     private lateinit var alcoholSwitch: MaterialSwitch
     private lateinit var alcoholIcon: ImageView
 
+    // API Call for search by name
     private fun updateAdapter(query: String) {
         repo.getCocktailsByName(query) { cocktails: List<Cocktail?>?, error : String? ->
             if (error != null) {
@@ -91,6 +92,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
             }
         })
 
+        // Handle when the button more is clicked
         adapter.onButtonClicked = {
             if (it == null)
                 Log.e("COCKTAIL SELECT", "Cocktail selected was null")
@@ -101,6 +103,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
             }
         }
 
+        // Handle filter based on no-alcohol drink
         alcoholSwitch.setOnClickListener() {
             if (alcoholSwitch.isChecked)
                 alcoholIcon.setColorFilter(R.color.blue)

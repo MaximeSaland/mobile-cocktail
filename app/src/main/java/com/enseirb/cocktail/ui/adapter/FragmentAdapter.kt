@@ -8,6 +8,7 @@ import com.enseirb.cocktail.ui.categories.CategoriesFragment
 import com.enseirb.cocktail.ui.ingredients.IngredientsFragment
 import com.enseirb.cocktail.ui.search.SearchFragment
 
+// Adapter used for handling the fragments
 class FragmentAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun createFragment(position: Int): Fragment {

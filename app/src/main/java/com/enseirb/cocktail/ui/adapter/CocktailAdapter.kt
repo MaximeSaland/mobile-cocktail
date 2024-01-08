@@ -11,6 +11,7 @@ import com.enseirb.cocktail.databinding.CocktailCardBinding
 import com.google.android.material.button.MaterialButton
 import com.squareup.picasso.Picasso
 
+// Adapter used for cocktail cards
 class CocktailAdapter(private var cocktailList: List<Cocktail?>) : RecyclerView.Adapter<CocktailAdapter.ViewHolder>() {
 
     var onButtonClicked: ( (String?) -> Unit)? = null

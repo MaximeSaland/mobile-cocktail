@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var randomButton: MaterialButton
 
+    // API Call for random search
     private fun randomSearch() {
         repo.getCocktailsByName("") {cocktails: List<Cocktail?>, error : String?->
             if (error != null) {
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // Handle Back Button
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val currentFragId = viewPager2.currentItem
