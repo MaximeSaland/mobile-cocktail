@@ -1,7 +1,6 @@
 package com.enseirb.cocktail.ui.search
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.enseirb.cocktail.R
 import com.enseirb.cocktail.core.model.Cocktail
 import com.enseirb.cocktail.core.service.ApiClient
 import com.enseirb.cocktail.core.service.CocktailRepository
@@ -20,6 +20,7 @@ import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.fragmentInterface.IOnBackPressed
 import com.enseirb.cocktail.ui.recipe.RecipeDetail
 import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.snackbar.Snackbar
 
 class SearchFragment : Fragment(), IOnBackPressed {
     private lateinit var binding: FragmentSearchBinding
@@ -31,19 +32,30 @@ class SearchFragment : Fragment(), IOnBackPressed {
     private lateinit var alcoholIcon: ImageView
 
     private fun updateAdapter(query: String) {
-        repo.getCocktailsByName(query) { cocktails: List<Cocktail?>? ->
-            if (!cocktails.isNullOrEmpty()) {
-                var tmp = cocktails
-                if (alcoholSwitch.isChecked)
-                    tmp = cocktails.filter { cocktail ->
-                        cocktail?.alcoholic != "Alcoholic"
+        repo.getCocktailsByName(query) { cocktails: List<Cocktail?>?, error : String? ->
+            if (error != null) {
+                binding.progressCircular.visibility = View.GONE
+                Snackbar.make(binding.root, "Failed retrieving data, please turn on Wi-Fi.", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry") {
+                        updateAdapter(query)
                     }
-                adapter.updateData(tmp)
-                binding.searchFragmentRecyclerView.visibility = View.VISIBLE
-            } else {
-                binding.linearLayoutNoCocktail.visibility = View.VISIBLE
+                    .show()
             }
-            binding.progressCircular.visibility = View.GONE
+            else {
+                if (!cocktails.isNullOrEmpty()) {
+                    var tmp = cocktails
+                    if (alcoholSwitch.isChecked)
+                        tmp = cocktails.filter { cocktail ->
+                            cocktail?.alcoholic != "Alcoholic"
+                        }
+                    adapter.updateData(tmp)
+                    binding.searchFragmentRecyclerView.visibility = View.VISIBLE
+                } else {
+                    binding.linearLayoutNoCocktail.visibility = View.VISIBLE
+                }
+                binding.progressCircular.visibility = View.GONE
+            }
+
         }
     }
     override fun onCreateView(
@@ -81,7 +93,7 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
         adapter.onButtonClicked = {
             if (it == null)
-                Log.i("COCKTAIL SELECT", "Cocktail selected was null")
+                Log.e("COCKTAIL SELECT", "Cocktail selected was null")
             else {
                 val intent = Intent(activity, RecipeDetail::class.java)
                 intent.putExtra("cocktailName", it)
@@ -91,9 +103,9 @@ class SearchFragment : Fragment(), IOnBackPressed {
 
         alcoholSwitch.setOnClickListener() {
             if (alcoholSwitch.isChecked)
-                alcoholIcon.setColorFilter(Color.RED)
+                alcoholIcon.setColorFilter(R.color.blue)
             else
-                alcoholIcon.setColorFilter(Color.GRAY)
+                alcoholIcon.setColorFilter(R.color.gray)
             if (searchView.query != null) {
                 updateAdapter(searchView.query.toString())
             }

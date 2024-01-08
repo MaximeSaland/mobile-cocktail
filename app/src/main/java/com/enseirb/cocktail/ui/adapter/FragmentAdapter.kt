@@ -11,12 +11,12 @@ import com.enseirb.cocktail.ui.search.SearchFragment
 class FragmentAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun createFragment(position: Int): Fragment {
-        when(position) {
-            0 -> return SearchFragment.newInstance()
-            1 -> return CategoriesFragment.newInstance()
-            2 -> return IngredientsFragment.newInstance()
+        return when(position) {
+            0 -> SearchFragment.newInstance()
+            1 -> CategoriesFragment.newInstance()
+            2 -> IngredientsFragment.newInstance()
             else -> {
-                return SearchFragment.newInstance()
+                SearchFragment.newInstance()
             }
         }
     }

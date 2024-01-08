@@ -18,6 +18,7 @@ import com.enseirb.cocktail.ui.adapter.CocktailAdapter
 import com.enseirb.cocktail.ui.adapter.TextAdapter
 import com.enseirb.cocktail.ui.fragmentInterface.IOnBackPressed
 import com.enseirb.cocktail.ui.recipe.RecipeDetail
+import com.google.android.material.snackbar.Snackbar
 
 
 class CategoriesFragment : Fragment(), IOnBackPressed{
@@ -28,6 +29,58 @@ class CategoriesFragment : Fragment(), IOnBackPressed{
     private lateinit var cocktailAdapter: CocktailAdapter
 
     private lateinit var selectedCategory : String
+
+    private fun getAllCategories() {
+        binding.progressCircular.visibility = View.VISIBLE
+        repo.getAllCategories { cat: List<StringResponse?>, error : String? ->
+            if (error != null) {
+                binding.progressCircular.visibility = View.GONE
+                Snackbar.make(binding.root, "Failed retrieving data, please turn on Wi-Fi.", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry") {
+                        getAllCategories()
+                    }
+                    .show()
+            }
+            else {
+                if (cat.isEmpty()) {
+                    Log.e("CATEGORIES", "no category found")
+                }
+                else {
+                    categoriesAdapter.updateData(cat)
+                    binding.progressCircular.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun getCocktail() {
+        binding.progressCircular.visibility = View.VISIBLE
+        binding.noAlcohol.visibility = View.GONE
+        repo.getCocktailsByCategory (selectedCategory) { cocktails : List<Cocktail?>, error : String? ->
+            if (error != null) {
+                binding.progressCircular.visibility = View.GONE
+                Snackbar.make(binding.root, "Failed retrieving data, please turn on Wi-Fi.", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry") {
+                        getCocktail()
+                    }
+                    .show()
+            }
+            else {
+                if (selectedCategory.isEmpty()) {
+                    Log.e("CATEGORY", "name of the category was empty")
+                }
+                if (cocktails.isEmpty()) {
+                    Log.i("CATEGORY", "no cocktail found")
+                    binding.noAlcohol.visibility = View.VISIBLE
+                }
+                else {
+                    cocktailAdapter.updateData(cocktails)
+                }
+                binding.progressCircular.visibility = View.GONE
+            }
+
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,47 +93,21 @@ class CategoriesFragment : Fragment(), IOnBackPressed{
         categoriesAdapter = TextAdapter(emptyList())
         recyclerView.adapter = categoriesAdapter
 
-        binding.progressCircular.visibility = View.VISIBLE
-        repo.getAllCategories { cat: List<StringResponse?> ->
-            if (cat.isEmpty()) {
-                Log.i("CATEGORIES", "empty")
-            }
-            else {
-                Log.i("CATEGORIES", "not_empty")
-                categoriesAdapter.updateData(cat)
-                binding.progressCircular.visibility = View.GONE
-            }
-        }
+
+        getAllCategories()
+
         selectedCategory = ""
         cocktailAdapter = CocktailAdapter(emptyList())
 
 
         categoriesAdapter.onItemClick = {
             selectedCategory = it ?: ""
-            Log.i("CATEGORY", "name of the category was $it")
-
-            binding.progressCircular.visibility = View.VISIBLE
-            repo.getCocktailsByCategory (selectedCategory) { cocktails : List<Cocktail?> ->
-                if (selectedCategory.isEmpty()) {
-                    Log.e("CATEGORY", "name of the category was empty")
-                }
-                if (cocktails.isEmpty()) {
-                    Log.i("CATEGORY", "no cocktail found")
-                }
-                else {
-                    Log.i("CATEGORY", "not_empty")
-                    cocktailAdapter.updateData(cocktails)
-                }
-                binding.progressCircular.visibility = View.GONE
-
-            }
-
+            getCocktail()
             recyclerView.adapter = cocktailAdapter
-            // Notify the RecyclerView that the data set has changed
         }
         cocktailAdapter.onButtonClicked = {
             if (it == null)
-                Log.i("COCKTAIL SELECT", "Cocktail selected was null")
+                Log.e("CATEGORY", "Cocktail selected was null")
             else {
                 val intent = Intent(activity, RecipeDetail::class.java)
                 intent.putExtra("cocktailName", it)
