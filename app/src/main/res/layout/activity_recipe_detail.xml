@@ -11,23 +11,33 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <com.google.android.material.appbar.AppBarLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            >
-            <com.google.android.material.appbar.MaterialToolbar
+            android:layout_height="60dp"
+            android:background="#2b3758">
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAlignment="center"
-                android:background="#2b3758"
-                app:titleTextColor="@color/white"
-                app:titleCentered="true"
-                android:id="@+id/app_bar"
+                android:text="Name of a Cocktail very long well"
+                android:gravity="center"
+                android:maxLength="29"
+                android:textSize="21sp"
+                android:textColor="@color/white"
+                android:id="@+id/title"
                 >
-            </com.google.android.material.appbar.MaterialToolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
+            </TextView>
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:button="@drawable/favorite_button"
+                android:id="@+id/favorite"
+                app:buttonTint="@color/red"/>
+        </RelativeLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
